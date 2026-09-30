@@ -10,7 +10,7 @@
         public User Owner { get; set; } = null!;
 
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
-        public DateTime DeleteAt { get; set; }
+        public DateTime DeletedAt { get; set; }
 
         public List<ProjectMember> Members { get; set; } = new();
         public List<TaskItem> Tasks { get; set; } = new();
