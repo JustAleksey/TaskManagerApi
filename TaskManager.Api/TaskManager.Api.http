@@ -1,6 +1,24 @@
-@TaskManager.Api_HostAddress = http://localhost:5094
+@host = https://localhost:7159
 
-GET {{TaskManager.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### 1. Регистрация
+POST {{host}}/auth/register
+Content-Type: application/json
 
-###
+{
+  "email": "alex@example.com",
+  "password": "12345678",
+  "name": "Alex"
+}
+
+### 2. Вход
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "alex@example.com",
+  "password": "12345678"
+}
+
+### 3. Кто я (нужен токен)
+GET {{host}}/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMTE4NTUwLCJzdWIiOiIxIiwiZW1haWwiOiJhbGV4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMTE0OTUwLCJuYmYiOjE3OTExMTQ5NTB9.-nR5YoKXsvL3QBNuddIv74It60tPrVOz7cABoHGDHCk
