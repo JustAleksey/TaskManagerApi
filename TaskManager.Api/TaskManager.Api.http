@@ -1,5 +1,5 @@
 @host = https://localhost:7159
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMjE3NTIzLCJzdWIiOiIyIiwiZW1haWwiOiJhbGUyMjJ4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMjEzOTIzLCJuYmYiOjE3OTEyMTM5MjN9.NK0yUb9DT3zzJtIeAPxS6tvb6pcpihgtZLURItv-sTo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMjE5NTM4LCJzdWIiOiIyIiwiZW1haWwiOiJhbGUyMjJ4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMjE1OTM4LCJuYmYiOjE3OTEyMTU5Mzh9.bHB3hCw7_EXtNPvmY1CCfwxPrVUuHi3-fykOqzM9nmc
 
 ### 1. Регистрация
 POST {{host}}/auth/register
@@ -40,4 +40,17 @@ Authorization: Bearer {{token}}
 
 ### 6. Один проект
 GET {{host}}/projects/1
+Authorization: Bearer {{token}}
+
+### 7. Изменить проект
+PATCH {{host}}/projects/7
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Новое имя1111"
+}
+
+### 8. Удалить проект
+DELETE {{host}}/projects/7
 Authorization: Bearer {{token}}

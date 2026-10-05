@@ -64,5 +64,54 @@ namespace TaskManager.Api.Controllers
 
             return project is null ? NotFound() : project;
         }
+
+        private Task<Project?> FindMyProject(int id) =>
+    db.Projects
+        .Include(p => p.Members)
+        .FirstOrDefaultAsync(p => p.Id == id && p.Members.Any(m => m.UserId == CurrentUserId));
+
+        private bool IsOwner(Project project) =>
+    project.Members.Any(m => m.UserId == CurrentUserId && m.Role == ProkectRole.Owner);
+
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult<ProjectResponse>> Update(int id, UpdateProjectRequest req)
+        {
+            var project = await FindMyProject(id);
+            if (project is null)
+            {
+                return NotFound();
+            }
+
+            if (!IsOwner(project)) return Forbid();
+
+            if (req.Name is not null)
+                project.Name = req.Name.Trim();
+
+            if (req.Description is not null)
+                project.Description = req.Description.Trim();
+
+            await db.SaveChangesAsync();
+
+            var response = new ProjectResponse(
+                project.Id, project.Name, project.Description,
+                project.OwnerId, project.CreateAt);
+
+            return response;
+        }
+
+        [HttpDelete("{id:int}")]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var project = await FindMyProject(id);
+            if (project is null)
+                return NotFound();
+            if (!IsOwner(project)) 
+                return Forbid();
+            
+            project.DeletedAt = DateTime.UtcNow;
+            await db.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }
