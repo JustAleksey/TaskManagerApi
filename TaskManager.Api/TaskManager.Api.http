@@ -1,4 +1,5 @@
 @host = https://localhost:7159
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMjE2NDQ4LCJzdWIiOiIxIiwiZW1haWwiOiJhbGV4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMjEyODQ4LCJuYmYiOjE3OTEyMTI4NDh9.7Gt2ucm8o30OXQ6PsHozcR8fqb7NZ5Uottbir0RfMiQ
 
 ### 1. Регистрация
 POST {{host}}/auth/register
@@ -22,3 +23,21 @@ Content-Type: application/json
 ### 3. Кто я (нужен токен)
 GET {{host}}/users/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMTE4NTUwLCJzdWIiOiIxIiwiZW1haWwiOiJhbGV4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMTE0OTUwLCJuYmYiOjE3OTExMTQ5NTB9.-nR5YoKXsvL3QBNuddIv74It60tPrVOz7cABoHGDHCk
+
+### 4. Создать проект
+POST {{host}}/projects
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Мой первый проект",
+  "description": "Учебный проект для API"
+}
+
+### 5. Список моих проектов
+GET {{host}}/projects
+Authorization: Bearer {{token}}
+
+### 6. Один проект
+GET {{host}}/projects/1
+Authorization: Bearer {{token}}
