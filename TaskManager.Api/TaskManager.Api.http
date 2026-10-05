@@ -1,14 +1,14 @@
 @host = https://localhost:7159
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMjE2NDQ4LCJzdWIiOiIxIiwiZW1haWwiOiJhbGV4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMjEyODQ4LCJuYmYiOjE3OTEyMTI4NDh9.7Gt2ucm8o30OXQ6PsHozcR8fqb7NZ5Uottbir0RfMiQ
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMjE3NTIzLCJzdWIiOiIyIiwiZW1haWwiOiJhbGUyMjJ4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMjEzOTIzLCJuYmYiOjE3OTEyMTM5MjN9.NK0yUb9DT3zzJtIeAPxS6tvb6pcpihgtZLURItv-sTo
 
 ### 1. Регистрация
 POST {{host}}/auth/register
 Content-Type: application/json
 
 {
-  "email": "alex@example.com",
+  "email": "ale222x@example.com",
   "password": "12345678",
-  "name": "Alex"
+  "name": "BOB"
 }
 
 ### 2. Вход
@@ -16,7 +16,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "alex@example.com",
+  "email": "ale222x@example.com",
   "password": "12345678"
 }
 
