@@ -1,9 +1,10 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using TaskManager.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TaskManager.Api.Controllers;
 using TaskManager.Api.Data;
+using TaskManager.Api.Services;
 
 namespace TaskManager.Api
 {
@@ -26,6 +27,7 @@ namespace TaskManager.Api
     ?? throw new InvalidOperationException("Не задан Jwt:Key (см. User Secrets)");
 
             builder.Services.AddScoped<TokenService>();
+            builder.Services.AddScoped<ProjectAccesService>();
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

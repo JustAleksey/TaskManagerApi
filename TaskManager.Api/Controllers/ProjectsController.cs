@@ -11,7 +11,7 @@ namespace TaskManager.Api.Controllers
     [ApiController]
     [Route("projects")]
     [Authorize]
-    public class ProjectsController(AppDbContext db) : ControllerBase
+    public class ProjectsController(AppDbContext db, ProjectAccesService access) : ControllerBase
     {
         private int CurrentUserId => User.GetUserId();
         [HttpPost]
@@ -64,25 +64,17 @@ namespace TaskManager.Api.Controllers
 
             return project is null ? NotFound() : project;
         }
-
-        private Task<Project?> FindMyProject(int id) =>
-    db.Projects
-        .Include(p => p.Members)
-        .FirstOrDefaultAsync(p => p.Id == id && p.Members.Any(m => m.UserId == CurrentUserId));
-
-        private bool IsOwner(Project project) =>
-    project.Members.Any(m => m.UserId == CurrentUserId && m.Role == ProkectRole.Owner);
-
+        
         [HttpPatch("{id:int}")]
         public async Task<ActionResult<ProjectResponse>> Update(int id, UpdateProjectRequest req)
         {
-            var project = await FindMyProject(id);
+            var project = await access.FindForUser(id, CurrentUserId);
             if (project is null)
             {
                 return NotFound();
             }
 
-            if (!IsOwner(project)) return Forbid();
+            if (!access.IsOwner(project, CurrentUserId)) return Forbid();
 
             if (req.Name is not null)
                 project.Name = req.Name.Trim();
@@ -103,10 +95,10 @@ namespace TaskManager.Api.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var project = await FindMyProject(id);
+            var project = await access.FindForUser(id, CurrentUserId);
             if (project is null)
                 return NotFound();
-            if (!IsOwner(project)) 
+            if (!access.IsOwner(project, CurrentUserId)) 
                 return Forbid();
             
             project.DeletedAt = DateTime.UtcNow;

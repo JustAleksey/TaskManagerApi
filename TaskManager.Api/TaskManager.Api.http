@@ -1,5 +1,6 @@
 @host = https://localhost:7159
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxMjE5NTM4LCJzdWIiOiIyIiwiZW1haWwiOiJhbGUyMjJ4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxMjE1OTM4LCJuYmYiOjE3OTEyMTU5Mzh9.bHB3hCw7_EXtNPvmY1CCfwxPrVUuHi3-fykOqzM9nmc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxNDc2MjY1LCJzdWIiOiIxIiwiZW1haWwiOiJhbGV4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxNDcyNjY1LCJuYmYiOjE3OTE0NzI2NjV9.eZU5yigeAT26oxzghsJIzaVuB3b52Bb1-2Kd9gKHkbU
+@tokenBob = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUYXNrTWFuYWdlciIsImlzcyI6IlRhc2tNYW5hZ2VyIiwiZXhwIjoxNzkxNDc2MjI4LCJzdWIiOiIyIiwiZW1haWwiOiJhbGUyMjJ4QGV4YW1wbGUuY29tIiwiaWF0IjoxNzkxNDcyNjI4LCJuYmYiOjE3OTE0NzI2Mjh9.bFaJIFhzJkj12RWVQfDx5hRyR8a5AnS6NgXgrv8Jp-Y
 
 ### 1. Регистрация
 POST {{host}}/auth/register
@@ -16,7 +17,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "ale222x@example.com",
+  "email": "alex@example.com",
   "password": "12345678"
 }
 
@@ -36,21 +37,49 @@ Authorization: Bearer {{token}}
 
 ### 5. Список моих проектов
 GET {{host}}/projects
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenBob}}
 
 ### 6. Один проект
-GET {{host}}/projects/1
-Authorization: Bearer {{token}}
+GET {{host}}/projects/2
+Authorization: Bearer {{tokenBob}}
 
 ### 7. Изменить проект
-PATCH {{host}}/projects/7
+PATCH {{host}}/projects/2
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenBob}}
 
 {
   "name": "Новое имя1111"
 }
 
 ### 8. Удалить проект
-DELETE {{host}}/projects/7
+DELETE {{host}}/projects/2
+Authorization: Bearer {{tokenBob}}
+
+
+
+### 9. Список участников
+GET {{host}}/projects/2/members
+Authorization: Bearer {{tokenBob}}
+
+### 10. Пригласить Боба
+POST {{host}}/projects/2/members
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "ale222x@example.com"
+}
+
+### 11. Боб приглашает кого-то (должен получить 403)
+POST {{host}}/projects/2/members
+Content-Type: application/json
+Authorization: Bearer {{tokenBob}}
+
+{
+  "email": "alex@example.com"
+}
+
+### 12. Боб покидает проект
+DELETE {{host}}/projects/2/members/2
 Authorization: Bearer {{token}}
